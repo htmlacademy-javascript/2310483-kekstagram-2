@@ -42,3 +42,10 @@ const isMeetingFitsWorkingDay = (workStarts, workEnds, meetingStarts, meetingDur
 
   return (workStartsInMinutes <= meetingStartsInMinutes && workEndsInMinutes >= meetingEndsInMinutes);
 };
+
+export {
+  isStringLonger,
+  isStringPalindrome,
+  getNumberFromString,
+  isMeetingFitsWorkingDay
+};
