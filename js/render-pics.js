@@ -1,4 +1,4 @@
-const template = document.getElementById('picture').content;
+const template = document.querySelector('#picture').content;
 
 const renderPics = (photos) => {
   const picturesContainer = document.querySelector('.pictures');
