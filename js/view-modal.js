@@ -1,18 +1,6 @@
-/*
-  Задание:
-  1) По клику на миниатюру должно открываться модальное окно .big-picture,
-  в котором будет отрисовываться информация кликнутой миниатюры. Отрисовка реализована через удаление класса hidden у .big-picture.
-  2) Комментарии вставляются в блок .social__comments.
-  3) .social__caption - описание фотографии (description)
-  4) после открытия модалки, скрываем через добавление класса hidden счетчик комментариев .social__comment-count и загрузку новых .comments-loader.
-  5) после открытия окна добавляем боди класс modal-open. При закрытии, соответственно, удаляем.
-  6) закрытие по клику на кнопку и по нажатию на ESC
-*/
-
 const modalWindow = document.querySelector('.big-picture');
 const bigPictureContainer = modalWindow.querySelector('.big-picture__img');
 const bigPictureImg = bigPictureContainer.querySelector('img');
-const userAvatar = modalWindow.querySelector('.social__picture');
 const caption = modalWindow.querySelector('.social__caption');
 const likesCount = modalWindow.querySelector('.likes-count');
 const closeButton = modalWindow.querySelector('.big-picture__cancel');
@@ -34,23 +22,47 @@ const createComment = (commentData) => {
   commentsContainer.appendChild(commentItemClone);
 };
 
+const renderComments = (comments) => {
+  const shownCount = Number(commentsShownCount.textContent);
+  const commentsToRender = comments.slice(0, shownCount);
+  commentsContainer.innerHTML = '';
+  commentsToRender.forEach(createComment);
+  commentsLoaderButton.classList.toggle('hidden', comments.length <= Number(commentsShownCount.textContent));
+};
+
+const increaseShownCommentsCount = (totalCommentsCount) => {
+  let result = Number(commentsShownCount.textContent);
+  if (result < totalCommentsCount) {
+    result = (totalCommentsCount - result) < 5 ? totalCommentsCount : result + 5;
+  }
+  commentsShownCount.textContent = result;
+};
+
+let onLoadMoreClick = null;
+
 const onCloseModal = () => {
   modalWindow.classList.add('hidden');
   document.body.classList.remove('modal-open');
   closeButton.removeEventListener('click', onCloseModal);
   document.removeEventListener('keydown', onCloseModal);
+  commentsLoaderButton.removeEventListener('click', onLoadMoreClick);
 };
+
 const onOpenModal = (data) => {
   const {url, description, likes, comments} = data;
-  commentsCount.classList.add('hidden');
-  commentsLoaderButton.classList.add('hidden');
-  commentsContainer.innerHTML = '';
-  comments.forEach(createComment);
+  commentsTotalCount.textContent = comments.length;
   bigPictureImg.src = url;
   caption.textContent = description;
   likesCount.textContent = likes;
+  commentsShownCount.textContent = comments.length >= 5 ? 5 : comments.length;
+  renderComments(comments);
   modalWindow.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  onLoadMoreClick = () => {
+    increaseShownCommentsCount(comments.length);
+    renderComments(comments);
+  };
+  commentsLoaderButton.addEventListener('click', onLoadMoreClick);
   closeButton.addEventListener('click', onCloseModal);
   document.addEventListener('keydown', onCloseModal);
 };
