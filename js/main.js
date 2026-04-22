@@ -5,5 +5,5 @@ import './upload-modal.js';
 import './functions.js';
 import {renderPics} from './render-pics.js';
 
-const photos = generateFakeDataArray(PHOTOS_COUNT);
-renderPics(photos);
+const data = generateFakeDataArray(PHOTOS_COUNT);
+renderPics(data);
