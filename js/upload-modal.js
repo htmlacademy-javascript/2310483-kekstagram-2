@@ -1,4 +1,6 @@
 import {isEscapeKey, isEnterKey} from './utils.js';
+import {onSubmit} from './form.js';
+import { resetValidation } from './form-validation.js';
 
 const modalWindow = document.querySelector('.img-upload__overlay');
 const editForm = document.querySelector('.img-upload__form');
@@ -7,9 +9,12 @@ const modalCloseButton = document.querySelector('.img-upload__cancel');
 
 const handleOpen = () => {
   modalWindow.classList.remove('hidden');
+  document.body.classList.add('modal-open');
 };
 const handleClose = () => {
   modalWindow.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  resetValidation();
 };
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -26,6 +31,7 @@ const onModalOpen = () => {
   );
   document.addEventListener('keydown', (evt) => onDocumentKeydown(evt)
   );
+  onSubmit();
 };
 //Функция закрытия модального окна
 const onModalClose = () => {
