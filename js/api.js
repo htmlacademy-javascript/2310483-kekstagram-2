@@ -8,9 +8,8 @@ const getPhotos = () => fetch(`${BASE_URL}/data`, {method: 'GET'})
     }
     return response.json();
   })
-  .catch((e) => {
+  .catch(() => {
     showGetPhotosError();
-    console.error('Error: ', e);
   });
 
 const postPhoto = (form) => fetch(BASE_URL, {method: 'POST', body: new FormData(form)})
@@ -20,9 +19,8 @@ const postPhoto = (form) => fetch(BASE_URL, {method: 'POST', body: new FormData(
     }
     return response.ok;
   })
-  .catch((e) => {
+  .catch(() => {
     showPostErrorMessage();
-    console.error('Error: ', e);
   });
 
 export { getPhotos, postPhoto };
