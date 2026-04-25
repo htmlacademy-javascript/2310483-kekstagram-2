@@ -1,5 +1,8 @@
 import { getNumberFromString } from './functions';
-import {SCALE_STEP, MIN_SCALE, MAX_SCALE} from './constants';
+
+const SCALE_STEP = 25;
+const MIN_SCALE = 25;
+const MAX_SCALE = 100;
 
 const buttonDecreaseScale = document.querySelector('.scale__control--smaller');
 const buttonIncreaseScale = document.querySelector('.scale__control--bigger');
