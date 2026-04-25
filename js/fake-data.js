@@ -1,10 +1,27 @@
 import {getRandomNumber} from './utils.js';
-import {
-  descriptionArray,
-  messagesArray,
-  names,
-} from './data.js';
-import {Likes, CommentsCount, PHOTOS_COUNT} from './constants.js';
+
+// DATA
+const PHOTOS_COUNT = 25;
+const Likes = {
+  MIN: 15,
+  MAX: 200
+};
+const CommentsCount = {
+  MIN: 0,
+  MAX: 30
+};
+
+const names = ['Dan', 'John', 'Dmitriy', 'Endy', 'Keks', 'Html', 'Lebovsky', 'Artem', 'Yana', 'Svetlana'];
+const descriptionArray = ['Rocks', 'Blood and Thunder', 'Great Keksby', 'React', 'Html Academy', 'Hexlet', 'Big and ugly'];
+const messagesArray = [
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.',
+  'В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
+];
 
 //Генерирует массив комментов
 const generateFakeCommentsArray = () => Array.from({length: getRandomNumber(CommentsCount.MIN, CommentsCount.MAX)}, (_, id) => ({

@@ -1,7 +1,21 @@
+const MAX_COUNT_HASHTAGS = 5;
+const MAX_DESCRIPTION = 140;
+const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
+
+const ErrorMessages = {
+  'NOT_VALID_HASHTAG': 'Хэштег должен начинаться с символа "#", содержать цифры и буквы латинского алфавита',
+  'EXCESS_HASHTAG': `Не более ${MAX_COUNT_HASHTAGS} хэштегов`,
+  'HASHTAG_REPEAT': 'Хэштеги должны быть уникальными',
+  'EXCESS_COMMENT': `Не более ${MAX_DESCRIPTION} символов`,
+};
+
 const uploadForm = document.querySelector('.img-upload__form');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
-const hashtagPattern = /^#[a-zа-яё0-9]{1,19}$/i;
+
+let hashtagErrorMessage = null;
+
+const setHashTagErrorMessage = () => hashtagErrorMessage;
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -14,15 +28,33 @@ const isHashtagsValid = (value) => {
   if (!value.trim()) {
     return true;
   }
-  const hashtags = value.trim().split(' ');
-  if (hashtags.length > 5) {
+  const hashtags = value.trim().toLowerCase().split(/\s+/);
+
+  if (hashtags.length > MAX_COUNT_HASHTAGS) {
+    hashtagErrorMessage = ErrorMessages.EXCESS_HASHTAG;
     return false;
   }
-  return hashtags.every((hashtag) => hashtagPattern.test(hashtag));
+
+  const uniques = [...new Set(hashtags)];
+  if(hashtags.length !== uniques.length){
+    hashtagErrorMessage = ErrorMessages.HASHTAG_REPEAT;
+    return false;
+  }
+  hashtagErrorMessage = ErrorMessages.NOT_VALID_HASHTAG;
+  return hashtags.every((hashtag) => HASHTAG_PATTERN.test(hashtag));
 };
 
-pristine.addValidator(hashtagsInput, isHashtagsValid, 'Макс. 5 хэштегов, без повторов, # + буквы/цифры');
-pristine.addValidator(commentInput, (value) => value.length <= 140, 'Макс. 140 символов');
+pristine.addValidator(
+  hashtagsInput,
+  isHashtagsValid,
+  setHashTagErrorMessage
+);
+
+pristine.addValidator(
+  commentInput,
+  (value) => value.length <= MAX_DESCRIPTION,
+  ErrorMessages.EXCESS_COMMENT
+);
 
 const checkValidaty = () => pristine.validate();
 
