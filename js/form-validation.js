@@ -24,15 +24,10 @@ const isHashtagsValid = (value) => {
 pristine.addValidator(hashtagsInput, isHashtagsValid, 'Макс. 5 хэштегов, без повторов, # + буквы/цифры');
 pristine.addValidator(commentInput, (value) => value.length <= 140, 'Макс. 140 символов');
 
-uploadForm.addEventListener('submit', (evt) => {
-  const isValid = pristine.validate();
-  if (!isValid) {
-    evt.preventDefault();
-  }
-});
+const checkValidaty = () => pristine.validate();
 
 const resetValidation = () => {
   pristine.reset();
 };
 
-export {resetValidation};
+export {checkValidaty, resetValidation};
