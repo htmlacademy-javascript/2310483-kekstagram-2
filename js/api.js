@@ -1,4 +1,4 @@
-import { showGetPhotosError, showPostErrorMessage } from './messages';
+import { showGetPhotosError, showPostErrorMessage } from './messages.js';
 
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const getPhotos = () => fetch(`${BASE_URL}/data`, {method: 'GET'})

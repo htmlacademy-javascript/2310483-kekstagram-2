@@ -1,9 +1,12 @@
-import { onOpenModal } from './view-modal';
+import {onOpenModal} from './view-modal.js';
 
 const template = document.querySelector('#picture').content;
 
 const renderPics = (photos) => {
   const picturesContainer = document.querySelector('.pictures');
+  const oldPhotos = picturesContainer.querySelectorAll('.picture');
+  oldPhotos.forEach((item) => item.remove());
+  const renderedPhotos = document.createDocumentFragment();
   photos.forEach((item) => {
     const {url, description, likes, comments} = item;
     const picture = template.cloneNode(true);
@@ -19,8 +22,9 @@ const renderPics = (photos) => {
     image.alt = description;
     likesCount.textContent = likes;
     commentsCount.textContent = comments.length;
-    picturesContainer.appendChild(picture);
+    renderedPhotos.appendChild(picture);
   });
+  picturesContainer.appendChild(renderedPhotos);
 };
 
 export {renderPics};

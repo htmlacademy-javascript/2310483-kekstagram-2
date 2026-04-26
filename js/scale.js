@@ -1,4 +1,4 @@
-import { getNumberFromString } from './functions';
+import { getNumberFromString } from './functions.js';
 
 const SCALE_STEP = 25;
 const MIN_SCALE = 25;

@@ -4,7 +4,7 @@ import { addScaleListeners, removeScaleListeners, resetScale } from './scale.js'
 import { checkValidaty } from './form-validation.js';
 import { resetEffects } from './effects.js';
 import { postPhoto } from './api.js';
-import { showPostSuccessMessage } from './messages';
+import { showPostSuccessMessage } from './messages.js';
 
 const modalWindow = document.querySelector('.img-upload__overlay');
 const uploadForm = document.querySelector('.img-upload__form');
