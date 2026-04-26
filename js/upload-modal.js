@@ -5,6 +5,7 @@ import { checkValidaty } from './form-validation.js';
 import { resetEffects } from './effects.js';
 import { postPhoto } from './api.js';
 import { showPostSuccessMessage } from './messages.js';
+import {handleUpload} from './upload-image.js';
 
 const modalWindow = document.querySelector('.img-upload__overlay');
 const uploadForm = document.querySelector('.img-upload__form');
@@ -13,11 +14,15 @@ const modalCloseButton = document.querySelector('.img-upload__cancel');
 const hashTagsInput = document.querySelector('.text__hashtags');
 const descriptionInput = document.querySelector('.text__description');
 
+
 uploadForm.method = 'post';
 uploadForm.action = 'https://31.javascript.htmlacademy.pro/kekstagram';
 uploadForm.enctype = 'multipart/form-data';
 
-const onUploadClick = () => handleOpen();
+const onUploadClick = ({target}) => {
+  handleUpload(target);
+  handleOpen();
+};
 const onEscapeKeydown = (evt) => {
   if (document.activeElement === hashTagsInput
       ||
