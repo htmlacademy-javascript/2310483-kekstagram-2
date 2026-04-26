@@ -5,7 +5,7 @@ import { checkValidaty } from './form-validation.js';
 import { resetEffects } from './effects.js';
 import { postPhoto } from './api.js';
 import { showPostSuccessMessage } from './messages.js';
-import {handleUpload} from './upload-image.js';
+import { setUploadImage } from './upload-image.js';
 
 const modalWindow = document.querySelector('.img-upload__overlay');
 const uploadForm = document.querySelector('.img-upload__form');
@@ -19,8 +19,10 @@ uploadForm.method = 'post';
 uploadForm.action = 'https://31.javascript.htmlacademy.pro/kekstagram';
 uploadForm.enctype = 'multipart/form-data';
 
-const onUploadClick = ({target}) => {
-  handleUpload(target);
+const onUpload = ({target}) => {
+  const file = target.files[0];
+  console.log(setUploadImage(file));
+  uploadImageButton.disabled = true;
   handleOpen();
 };
 const onEscapeKeydown = (evt) => {
@@ -49,6 +51,7 @@ const onSubmit = (evt) => {
   postPhoto(uploadForm)
     .then((isOk) => {
       if (isOk) {
+        console.log(isOk);
         handleClose();
         showPostSuccessMessage();
       }
@@ -81,7 +84,7 @@ function handleClose () {
 
 //Функция открытия модального окна
 const onModalOpen = () => {
-  uploadImageButton.addEventListener('change', onUploadClick);
+  uploadImageButton.addEventListener('change', onUpload);
 };
 //Функция закрытия модального окна
 const onModalClose = () => {
