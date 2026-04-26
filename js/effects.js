@@ -107,7 +107,8 @@ noUiSlider.create(effectsSlider, EffectsSettings[currentEffect].slider);
 
 effectsSlider.noUiSlider.on('update', () => {
   const value = effectsSlider.noUiSlider.get();
-  applyEffect(value);
+  const fixedValue = Number(value);
+  applyEffect(fixedValue);
 });
 
 const setEffect = (effect) => {

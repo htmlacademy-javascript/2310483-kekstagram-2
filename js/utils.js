@@ -5,7 +5,7 @@ const getRandomNumber = (min, max) => Math.round(Math.random() * (max - min) + m
 const isEscapeKey = (evt) => evt.key === 'Escape' || evt.keyCode === 27;
 const isEnterKey = (evt) => evt.key === 'Enter' || evt.keyCode === 13;
 
-function debounce (callback, timeoutDelay) {
+function debounce (callback, timeoutDelay = 500) {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);

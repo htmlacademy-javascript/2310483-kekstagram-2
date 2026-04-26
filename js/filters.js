@@ -1,7 +1,8 @@
 import { renderPics } from './render-pics.js';
-import { getRandomNumber } from './utils.js';
+import { getRandomNumber, debounce } from './utils.js';
 
 const RANDOM_SORT_COUNT = 10;
+const TIMEOUT_DELAY = 500;
 
 const filterButtons = document.querySelectorAll('.img-filters__button');
 
@@ -45,7 +46,8 @@ const onClickSort = ({target}, photos) => {
     setActiveFilter(target);
     filteredPhotos = filters[id](initialState);
   }
-  renderPics(filteredPhotos);
+  const debouncedRenderPics = debounce(renderPics, TIMEOUT_DELAY);
+  debouncedRenderPics(filteredPhotos);
 };
 const filter = (data) => filterButtons.forEach((button) =>
   button.addEventListener('click', (evt) => onClickSort(evt, data))
