@@ -1,3 +1,5 @@
+import { isEscapeKey } from './utils.js';
+
 const modalWindow = document.querySelector('.big-picture');
 const bigPictureContainer = modalWindow.querySelector('.big-picture__img');
 const bigPictureImg = bigPictureContainer.querySelector('img');
@@ -34,23 +36,31 @@ const renderComments = (comments) => {
 
 const increaseShownCommentsCount = (totalCommentsCount) => {
   let result = Number(commentsShownCount.textContent);
+
   if (result < totalCommentsCount) {
     result = (totalCommentsCount - result) < 5 ? totalCommentsCount : result + 5;
   }
+
   commentsShownCount.textContent = result;
 };
 
 let onLoadMoreClick = null;
 
-const onCloseModal = () => {
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    onCloseModal();
+  }
+};
+
+function onCloseModal() {
   modalWindow.classList.add('hidden');
   document.body.classList.remove('modal-open');
   closeButton.removeEventListener('click', onCloseModal);
-  document.removeEventListener('keydown', onCloseModal);
+  document.removeEventListener('keydown', onDocumentKeydown);
   commentsLoaderButton.removeEventListener('click', onLoadMoreClick);
-};
+}
 
-const onOpenModal = (data) => {
+function onOpenModal(data) {
   const {url, description, likes, comments} = data;
 
   commentsTotalCount.textContent = comments.length;
@@ -71,8 +81,8 @@ const onOpenModal = (data) => {
 
   commentsLoaderButton.addEventListener('click', onLoadMoreClick);
   closeButton.addEventListener('click', onCloseModal);
-  document.addEventListener('keydown', onCloseModal);
-};
+  document.addEventListener('keydown', onDocumentKeydown);
+}
 
 export {
   onOpenModal,

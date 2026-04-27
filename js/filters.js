@@ -53,10 +53,13 @@ const onClickSort = ({ target }, photos) => {
   debouncedRenderPics(filteredPhotos);
 };
 
-const filter = (data) => filterButtons.forEach((button) =>
-  button.addEventListener('click', (evt) => onClickSort(evt, data))
-);
+const showFilter = (data) => {
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
+  filterButtons.forEach((button) =>
+    button.addEventListener('click', (evt) => onClickSort(evt, data))
+  );
+};
 
 export {
-  filter,
+  showFilter
 };
