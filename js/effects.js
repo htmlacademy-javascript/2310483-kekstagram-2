@@ -1,4 +1,4 @@
-const EFFECTS = {
+const Effects = {
   NONE: 'none',
   CHROME: 'chrome',
   SEPIA: 'sepia',
@@ -6,9 +6,8 @@ const EFFECTS = {
   PHOBOS: 'phobos',
   HEAT: 'heat'
 };
-const DEFAULT_EFFECT = EFFECTS.NONE;
 const EffectsSettings = {
-  [EFFECTS.NONE]: {
+  [Effects.NONE]: {
     slider: {
       range: {
         min: 0,
@@ -21,7 +20,7 @@ const EffectsSettings = {
     style: '',
     units: ''
   },
-  [EFFECTS.CHROME]: {
+  [Effects.CHROME]: {
     slider: {
       range: {
         min: 0,
@@ -33,7 +32,7 @@ const EffectsSettings = {
     style: 'grayscale',
     units: ''
   },
-  [EFFECTS.SEPIA]: {
+  [Effects.SEPIA]: {
     slider: {
       range: {
         min: 0,
@@ -45,7 +44,7 @@ const EffectsSettings = {
     style: 'sepia',
     units: ''
   },
-  [EFFECTS.MARVIN]: {
+  [Effects.MARVIN]: {
     slider: {
       range: {
         min: 0,
@@ -57,7 +56,7 @@ const EffectsSettings = {
     style: 'invert',
     units: '%'
   },
-  [EFFECTS.PHOBOS]: {
+  [Effects.PHOBOS]: {
     slider: {
       range: {
         min: 0,
@@ -69,7 +68,7 @@ const EffectsSettings = {
     style: 'blur',
     units: 'px'
   },
-  [EFFECTS.HEAT]: {
+  [Effects.HEAT]: {
     slider: {
       range: {
         min: 1,
@@ -82,6 +81,7 @@ const EffectsSettings = {
     units: ''
   }
 };
+const DEFAULT_EFFECT = Effects.NONE;
 
 const effectsList = document.querySelector('.effects__list');
 const sliderFieldset = document.querySelector('.effect-level');
@@ -91,13 +91,15 @@ const imagePreviewWrapper = document.querySelector('.img-upload__preview');
 const imagePreview = imagePreviewWrapper.querySelector('img');
 
 let currentEffect = DEFAULT_EFFECT;
-const isNoneEffect = () => currentEffect === EFFECTS.NONE;
+
+const isNoneEffect = () => currentEffect === Effects.NONE;
 
 const applyEffect = (value) => {
   if (isNoneEffect()) {
     imagePreview.style.filter = '';
     return;
   }
+
   const { style, units } = EffectsSettings[currentEffect];
   imagePreview.style.filter = `${style}(${value}${units})`;
   effectsSliderInput.value = value;
@@ -107,7 +109,8 @@ noUiSlider.create(effectsSlider, EffectsSettings[currentEffect].slider);
 
 effectsSlider.noUiSlider.on('update', () => {
   const value = effectsSlider.noUiSlider.get();
-  applyEffect(value);
+  const fixedValue = Number(value);
+  applyEffect(fixedValue);
 });
 
 const setEffect = (effect) => {
@@ -123,9 +126,7 @@ const setEffect = (effect) => {
 };
 
 const onEffectsChange = (evt) => {
-  if (evt.target.classList.contains('effects__radio')) {
-    setEffect(evt.target.value);
-  }
+  setEffect(evt.target.value);
 };
 
 effectsList.addEventListener('change', onEffectsChange);

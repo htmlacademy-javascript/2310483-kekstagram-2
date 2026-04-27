@@ -13,9 +13,11 @@ const commentsLoaderButton = modalWindow.querySelector('.social__comments-loader
 
 const createComment = (commentData) => {
   const {avatar, message, name} = commentData;
+
   const commentItemClone = commentItem.cloneNode(true);
   const commentAvatar = commentItemClone.querySelector('.social__picture');
   const commentText = commentItemClone.querySelector('.social__text');
+
   commentAvatar.src = avatar;
   commentAvatar.alt = name;
   commentText.textContent = message;
@@ -50,18 +52,23 @@ const onCloseModal = () => {
 
 const onOpenModal = (data) => {
   const {url, description, likes, comments} = data;
+
   commentsTotalCount.textContent = comments.length;
   bigPictureImg.src = url;
   caption.textContent = description;
   likesCount.textContent = likes;
   commentsShownCount.textContent = comments.length >= 5 ? 5 : comments.length;
+
   renderComments(comments);
+
   modalWindow.classList.remove('hidden');
   document.body.classList.add('modal-open');
+
   onLoadMoreClick = () => {
     increaseShownCommentsCount(comments.length);
     renderComments(comments);
   };
+
   commentsLoaderButton.addEventListener('click', onLoadMoreClick);
   closeButton.addEventListener('click', onCloseModal);
   document.addEventListener('keydown', onCloseModal);

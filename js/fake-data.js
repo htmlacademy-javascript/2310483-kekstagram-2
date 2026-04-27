@@ -1,6 +1,5 @@
 import {getRandomNumber} from './utils.js';
 
-// DATA
 const PHOTOS_COUNT = 25;
 const Likes = {
   MIN: 15,
@@ -23,7 +22,6 @@ const messagesArray = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-//Генерирует массив комментов
 const generateFakeCommentsArray = () => Array.from({length: getRandomNumber(CommentsCount.MIN, CommentsCount.MAX)}, (_, id) => ({
   id: id + 26,
   avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
@@ -31,7 +29,6 @@ const generateFakeCommentsArray = () => Array.from({length: getRandomNumber(Comm
   name: names[getRandomNumber(0, names.length)],
 }));
 
-//Генерирует массив данных
 const generateFakeDataArray = () => Array.from({length: PHOTOS_COUNT}, (_, i) => ({
   id: i + 1,
   url: `photos/${i + 1}.jpg`,
