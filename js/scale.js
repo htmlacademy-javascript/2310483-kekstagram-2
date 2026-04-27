@@ -1,5 +1,3 @@
-import { getNumberFromString } from './functions.js';
-
 const SCALE_STEP = 25;
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
@@ -11,7 +9,7 @@ const imagePreview = imagePreviewWrapper.querySelector('img');
 const scaleInput = document.querySelector('.scale__control--value');
 
 const changeScale = (step) => {
-  const initialValue = getNumberFromString(scaleInput.value);
+  const initialValue = parseInt(scaleInput.value, 10);
   let newValue = initialValue + step;
 
   if (newValue > MAX_SCALE) {

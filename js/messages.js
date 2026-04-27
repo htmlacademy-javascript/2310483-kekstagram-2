@@ -1,3 +1,5 @@
+import { isEscapeKey } from './utils.js';
+
 const ERROR_MESSAGE_TIMER = 5000;
 
 const dataErrorTemplate = document.querySelector('#data-error').content;
@@ -31,8 +33,8 @@ const showMessage = (type) => {
   const message = templates[type].popup.cloneNode(true);
   body.append(message);
 
-  const onDocumentKeydown = ({ key }) => {
-    if (key === 'Escape') {
+  const onDocumentKeydown = (evt) => {
+    if (isEscapeKey(evt)) {
       message.remove();
       body.classList.remove('open-modal');
       document.removeEventListener('keydown', onDocumentKeydown);
