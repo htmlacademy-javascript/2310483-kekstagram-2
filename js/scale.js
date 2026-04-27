@@ -23,11 +23,11 @@ const changeScale = (step) => {
   imagePreview.style.transform = `scale(${newValue / MAX_SCALE})`;
 };
 
-const decreaseScale = () => changeScale(-SCALE_STEP);
-const increaseScale = () => changeScale(SCALE_STEP);
+const onDecreaseButtonScale = () => changeScale(-SCALE_STEP);
+const onIncreaseButtonScale = () => changeScale(SCALE_STEP);
 
-decreaseScaleButton.addEventListener('click', decreaseScale);
-increaseScaleButton.addEventListener('click', increaseScale);
+decreaseScaleButton.addEventListener('click', onDecreaseButtonScale);
+increaseScaleButton.addEventListener('click', onIncreaseButtonScale);
 
 const resetScale = () => {
   scaleInput.value = '100%';
